@@ -1,40 +1,6 @@
-const searchURL = 'https://api.github.com/users/:username/repos';
-
-const acceptHeader = "application/vnd.github.nebula-preview+json";
-
-function formatQueryParams(params) {
-    const queryItems = Object.keys(params)
-      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-    return queryItems.join('&');
-  }
-  
-  function displayResults(responseJson) {
-    console.log(responseJson);
-    $('#results-list').empty();
-    for (let i = 0; i < responseJson.value.length; i++) {
-      $('#results-list').append(
-        `<li><h3><a href="${responseJson.value[i].url}">${responseJson.value[i].name}</a></h3>
-        </li>`
-      )};
-    $('#results').removeClass('hidden');
-  };
-  
-  function getUser(query) {
-    const params = {
-      q: query,
-    };
-    const queryString = formatQueryParams(params)
-    const url = searchURL + '?' + queryString;
-  
-    console.log(url);
-  
-    const options = {
-        headers: new Headers({
-          "accept": acceptHeader
-        })
-    };
-  
-    fetch(url, options)
+function getAPI(userInput) {
+const searchURL = `https://api.github.com/users/${userInput}/repos`;
+fetch(searchURL)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -45,13 +11,29 @@ function formatQueryParams(params) {
       .catch(err => {
         $('#js-error-message').text(`Something went wrong: ${err.message}`);
       });
+      displayResults();
   }
+
+  function displayResults(responseJson) {
+    $('#results-list').empty();
+    $('#results-list').append
+    for (let i = 0; i < responseJson.length; i++) {
+      $('#results-list').append(
+        `
+        <li><a href="${responseJson[i].html_url}" target="_blank"><h3>${responseJson[i].name}</h3></a></li>
+        <p>${responseJson[i].description}</p>
+        <br>
+        `
+      )};
+    $('#results').removeClass('hidden');
+  };
   
   function watchForm() {
     $('form').submit(event => {
       event.preventDefault();
-      const searchTerm = $('#js-search-term').val();
-      getUser(searchTerm);
+      const userInput = $('#js-gitHandle').val();
+      $('.userInput').text(`GitHub Repositories for ${userInput}`)
+      getAPI(userInput);
     });
   }
   

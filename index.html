@@ -10,22 +10,24 @@
 </head>
 <body>
     <div class="container">
-        <h1>Handle This...</h1>
-
-        <form id="js-form">
-            <label for="search-term">Search Term</label>
-            <input type="text" name="search-term" id="js-search-term" required>
-
-            <input type="submit" value="Search">
-        </form>
-
-        <p id="js-error-message" class="error-message"></p>
-        <section id="results" class="hidden">
-          <h2>Search results</h2>
-          <ul id="results-list">
-          </ul>
-        </section>
-    </div>
+        <section class="form">
+          <h1>GitHub API</h1>
+          <p>Search for repositories on GitHub from a selected user.
+  
+          <form id="js-form">
+            <label for ="gitHandle">Github handle:
+            <input type="text" name="gitHandle"placeholder="username" id="js-gitHandle" required></label>
+            <br>
+            <button type="submit" role="search">Search</button>
+          </form>
+          </section>
+          <p id="js-error-message" class="error-message"></p>
+  
+          <section id="results" class="hidden">
+            <h2 class="userInput">GitHub repositories for </h2>
+            <ul id="results-list"></ul>
+          </section>
+      </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
